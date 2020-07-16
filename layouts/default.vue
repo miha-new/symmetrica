@@ -1,6 +1,5 @@
 <template>
   <div>
-    <menu-catalog />
     <Nuxt />
   </div>
 </template>

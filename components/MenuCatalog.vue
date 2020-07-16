@@ -1,6 +1,6 @@
 <template>
   <div
-    v-if="cats.length"
+    v-if="categories.length"
     class="menu-catalog"
     :class="{open}"
   >
@@ -16,14 +16,14 @@
     >
       <div
         class="catalog-item"
-        v-for="(cat, index) in cats"
+        v-for="(category, index) in categories"
         :key="index"
       >
         <nuxt-link
           class="catalog-link"
-          :to="`/catalog/${cat.url}`"
+          :to="`/catalog/${category.url}`"
         >
-          {{cat.name}}
+          {{category.name}}
         </nuxt-link>
       </div>
     </div>
@@ -34,19 +34,10 @@
   import {mapState} from 'vuex'
 
   export default {
+    props: ['categories'],
     data: () => ({
       open: true
-    }),
-    computed: {
-      ...mapState(['categories']),
-      cats() {
-        const currCategoryId = this.currCat ? this.currCat.category_id : this.currCat
-        return this.categories.filter(item => currCategoryId === item.parent_id)
-      },
-      currCat() {
-        return this.categories.find(item => this.$route.path === `/catalog/${item.url}`)
-      }
-    }
+    })
   }
 </script>
 
@@ -91,7 +82,8 @@
     transition: background-color .25s, color .25s;
     cursor: pointer;
   }
-  .menu-catalog .catalog-link:hover {
+  .menu-catalog .catalog-link:hover,
+  .menu-catalog .catalog-link.nuxt-link-exact-active {
     background-color: #004ba0;
     color: #fff;
   }
